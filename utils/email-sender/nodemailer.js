@@ -9,8 +9,6 @@ const transporter = nodemailer.createTransport({
 })
 
 async function transportEmail (userEmail, otp) {
-    console.log("Email:", process.env.TRANSPORTER_EMAIL);
-    console.log("Pass:", process.env.TRANSPORTER_PASS);
     try {
         const response = await transporter.sendMail({
             from: 'Todo Application',

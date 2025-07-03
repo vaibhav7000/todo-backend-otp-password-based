@@ -1,9 +1,9 @@
 const express = require("express");
+require('dotenv').config();
 const app = express();
 const cors = require("cors");
 const { connectionWithDatabase } = require("./db/database.js");
 const signInRouter = require("./routes/AuthRoutes/signupRoute.js");
-require('dotenv').config();
 
 app.use(cors({
     origin: "*",

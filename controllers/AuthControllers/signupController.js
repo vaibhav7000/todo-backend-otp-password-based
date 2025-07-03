@@ -28,7 +28,7 @@ async function sendOTP(req, res, next) {
             ...store[email], setTimoutId
         }
 
-        res.status(200),json({
+        res.status(200).json({
             msg: "OTP send successfully"
         })
 
