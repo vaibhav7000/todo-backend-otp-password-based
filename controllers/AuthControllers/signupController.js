@@ -42,9 +42,9 @@ async function addUserToDatabase(req, res, next) {
 
     const { password } = store[email]
 
-    delete store[email];
-
     clearTimeout(store[email].setTimoutId);
+
+    delete store[email];
 
     try {
         const finalUser = new User({

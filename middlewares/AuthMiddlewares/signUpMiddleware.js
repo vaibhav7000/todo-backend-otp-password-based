@@ -1,6 +1,6 @@
 const { emailSchema, passwordSchema } = require("../../utils/types.js");
 const { User } = require("../../db/database.js");
-
+const store  = require("../../store/redis.js");
 
 function verifyEmailPassword(req, res, next) {
     const { email, password } = req.body;
@@ -51,10 +51,22 @@ async function checkEmailUnique(req, res, next) {
     next();
 }
 
-function checkOTP(req, res, next) {
+function checkOTPAndEmail(req, res, next) {
 
     const { email, otp } = req.body;
-    const finalOTP = parseInt(otp)
+    const finalOTP = parseInt(otp);
+
+    const result = emailSchema.safeParse({
+        email
+    });
+
+
+    if(!result.success) {
+        res.status(401).json({
+            msg: "Email invalid"
+        })
+        return
+    }
 
     if(!finalOTP) {
         res.status(401).json({
@@ -70,7 +82,7 @@ function checkOTP(req, res, next) {
         return
     }
 
-    if(store[email] != finalOTP) {
+    if(store[email].otp != finalOTP) {
         res.status(401).json({
             msg: "Incorrect OTP"
         })
@@ -83,5 +95,5 @@ function checkOTP(req, res, next) {
 }
 
 module.exports = {
-    verifyEmailPassword, checkEmailUnique, checkOTP
+    verifyEmailPassword, checkEmailUnique, checkOTPAndEmail
 }
