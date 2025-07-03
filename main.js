@@ -3,7 +3,8 @@ require('dotenv').config();
 const app = express();
 const cors = require("cors");
 const { connectionWithDatabase } = require("./db/database.js");
-const signInRouter = require("./routes/AuthRoutes/signupRoute.js");
+const signUpRouter = require("./routes/AuthRoutes/signupRoute.js");
+const signInRouter = require("./routes/AuthRoutes/signinRoute.js");
 
 app.use(cors({
     origin: "*",
@@ -11,7 +12,8 @@ app.use(cors({
 
 app.use(express.json());
 
-app.use("/sigin", signInRouter);
+app.use("/signup", signUpRouter);
+app.use("/signin", signInRouter);
 
 main();
 
